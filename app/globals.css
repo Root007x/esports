@@ -1,0 +1,114 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: #050508;
+    --surface: #0D0D14;
+    --card: #12121C;
+    --border: #1E1E2E;
+    --primary: #7C3AED;
+    --secondary: #06B6D4;
+    --danger: #EF4444;
+    --text-primary: #FFFFFF;
+    --text-muted: #64748B;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-text-primary antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  /* Scanline overlay - subtle CRT effect */
+  .scanline-overlay {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9998;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0, 0, 0, 0.03) 2px,
+      rgba(0, 0, 0, 0.03) 4px
+    );
+  }
+
+  /* Glitch text - RGB split on hover only (avoids constant animation + perf) */
+  .glitch-text {
+    position: relative;
+  }
+  .glitch-text::before,
+  .glitch-text::after {
+    content: attr(data-text);
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.15s ease;
+  }
+  .glitch-text:hover::before,
+  .glitch-text:hover::after {
+    opacity: 1;
+  }
+  .glitch-text::before {
+    color: #06B6D4;
+    z-index: -2;
+    clip-path: polygon(0 0, 100% 0, 100% 35%, 0 35%);
+    transform: translate(-2px, 2px);
+  }
+  .glitch-text:hover::before {
+    animation: glitch-1 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94) 2;
+  }
+  .glitch-text::after {
+    color: #EF4444;
+    z-index: -1;
+    clip-path: polygon(0 65%, 100% 65%, 100% 100%, 0 100%);
+    transform: translate(2px, -2px);
+  }
+  .glitch-text:hover::after {
+    animation: glitch-2 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94) reverse 2;
+  }
+  @keyframes glitch-1 {
+    0% { transform: translate(-2px, 2px); }
+    20% { transform: translate(2px, -2px); }
+    40% { transform: translate(-2px, 2px); }
+    60% { transform: translate(2px, 2px); }
+    80% { transform: translate(-2px, -2px); }
+    100% { transform: translate(-2px, 2px); }
+  }
+  @keyframes glitch-2 {
+    0% { transform: translate(2px, -2px); }
+    20% { transform: translate(-2px, 2px); }
+    40% { transform: translate(2px, -2px); }
+    60% { transform: translate(-2px, -2px); }
+    80% { transform: translate(2px, 2px); }
+    100% { transform: translate(2px, -2px); }
+  }
+
+  /* Skip to content - accessibility */
+  .skip-to-content {
+    @apply absolute left-4 top-4 z-[10000] -translate-y-20 rounded-md bg-primary px-4 py-2 font-orbitron text-sm font-bold text-white transition focus:translate-y-0 focus:outline-none focus:ring-2 focus:ring-secondary;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
