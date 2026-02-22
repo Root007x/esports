@@ -4,7 +4,8 @@ Production-grade esports team website for **Inner Peace**, a competitive Valoran
 
 ## Tech Stack
 
-- **Next.js 14** (App Router) + **TypeScript** (strict)
+- **Next.js 16** (App Router) + **React 19** + **TypeScript** (strict)
+
 - **TailwindCSS** with custom design tokens
 - **Framer Motion** for animations
 - **Three.js / @react-three/fiber** for 3D hero background
@@ -20,9 +21,12 @@ Production-grade esports team website for **Inner Peace**, a competitive Valoran
 ## Getting Started
 
 ```bash
-npm install --legacy-peer-deps
+npm install
+npm run dev
+# or with Turbopack (default)
 npm run dev
 ```
+
 
 Open [http://localhost:3000](http://localhost:3000).
 
@@ -35,34 +39,122 @@ npm start
 
 ## Project Structure
 
-- `app/` — Layout, homepage, `/roster`, `/matches`, `/games`, `/about`, `not-found`, `robots.ts`, `sitemap.ts`
-- `components/ui/` — Button, Badge, Card, Avatar, Progress, Tooltip
-- `components/sections/` — Navbar, Hero, Games, RosterPreview, Stats, Achievements, MatchesPreview, DiscordCta, Footer
-- `components/three/` — ParticleField, GeometricBackground
-- `components/shared/` — CustomCursor, ScrollProgress, BackToTop, PageTransition, GlitchText
-- `constants/data.ts` — Team data (roster, matches, games, achievements, social links)
-- `types/` — Shared TypeScript types + R3F JSX merge
+```
+app/                    # Next.js App Router
+├── layout.tsx          # Root layout with fonts, metadata
+├── page.tsx            # Homepage with all sections
+├── globals.css         # Global styles, CSS variables
+├── not-found.tsx       # 404 page
+├── robots.ts           # SEO robots config
+├── sitemap.ts          # SEO sitemap config
+├── about/              # About page (story, values, timeline)
+├── games/              # Games page (Valorant, CS2 rosters)
+├── matches/            # Match history with filters
+└── roster/             # Full team roster with search
 
-## Data
+components/
+├── ui/                 # shadcn-style components
+│   ├── button.tsx
+│   ├── card.tsx
+│   ├── badge.tsx
+│   ├── avatar.tsx
+│   ├── progress.tsx
+│   └── tooltip.tsx
+├── sections/           # Page sections
+│   ├── Navbar.tsx
+│   ├── Hero.tsx / HeroSection.tsx
+│   ├── Games.tsx
+│   ├── RosterPreview.tsx
+│   ├── Stats.tsx
+│   ├── Achievements.tsx
+│   ├── MatchesPreview.tsx
+│   ├── DiscordCta.tsx
+│   └── Footer.tsx
+├── three/              # 3D WebGL components
+│   ├── ParticleField.tsx
+│   └── GeometricBackground.tsx
+└── shared/             # Shared utilities
+    ├── CustomCursor.tsx
+    ├── ScrollProgress.tsx
+    ├── BackToTop.tsx
+    ├── GlitchText.tsx
+    └── PageTransition.tsx
 
-Edit `constants/data.ts` to update:
+constants/
+└── data.ts             # All team data (roster, matches, etc.)
 
-- Team info, Discord, socials, email
-- Roster (replace placeholder IGNs, avatars, stats)
-- Matches, achievements
-- `upcomingMatches` for countdown on `/matches`
+types/
+└── index.ts            # TypeScript interfaces
 
-Replace `discord.gg/YOURLINK` with your real Discord invite.
+lib/
+└── utils.ts            # Utility functions (cn helper)
+```
 
-## Checklist
 
-- [x] Crosshair cursor (desktop only)
-- [x] Three.js particle background (lazy, no SSR)
-- [x] Glitch text on hero
-- [x] Roster/Match/Game filters
-- [x] Countdown on upcoming matches
-- [x] Scroll-triggered counter animations
-- [x] Responsive layout
-- [x] SEO: metadata, robots.txt, sitemap.xml
+## Customization
 
-© 2025 Inner Peace Esports.
+### Update Team Data
+
+Edit `constants/data.ts` to customize:
+
+| Section | Data to Update |
+|---------|---------------|
+| **Team Info** | Name, tagline, founded year, region, email |
+| **Social Links** | Discord, Twitter/X, Instagram, YouTube, Facebook |
+| **Roster** | Player usernames, real names, roles, ranks, stats, avatars |
+| **Matches** | Match history (opponent, score, result, map, tournament) |
+| **Achievements** | Tournament placements with titles |
+| **Upcoming** | `upcomingMatches` for countdown timers |
+
+> ⚠️ **Important:** Replace `discord.gg/YOURLINK` with your actual Discord invite link.
+
+### Design Tokens
+
+Colors and styles can be customized in:
+- `tailwind.config.ts` — Colors, fonts, shadows, animations
+- `app/globals.css` — CSS variables, global styles
+
+
+## Features
+
+| Feature | Description |
+|---------|-------------|
+| 🎯 **Custom Cursor** | Crosshair-style cursor with hover states (desktop) |
+| ✨ **3D Background** | Three.js particle field with connecting lines |
+| 📝 **Glitch Text** | RGB split effect on hero title hover |
+| 🔍 **Filters** | Game filters on roster, matches, and games pages |
+| ⏱️ **Countdown** | Live countdown to upcoming matches |
+| 📊 **Animated Stats** | Scroll-triggered number counters |
+| 📱 **Responsive** | Mobile-first design with breakpoints |
+| 🔍 **SEO Ready** | Meta tags, OpenGraph, robots.txt, sitemap.xml |
+| ♿ **Accessible** | Skip-to-content, ARIA labels, keyboard nav |
+| ⚡ **Performance** | Turbopack, lazy loading, RAF throttling |
+
+## Available Scripts
+
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Start dev server with Turbopack |
+| `npm run build` | Build for production |
+| `npm run start` | Start production server |
+| `npm run lint` | Run ESLint |
+
+## Deployment
+
+### Vercel (Recommended)
+```bash
+npm i -g vercel
+vercel
+```
+
+### Self-Hosted
+```bash
+npm run build
+npm start
+```
+
+## License
+
+© 2026 Inner Peace Esports. All rights reserved.
+
+Built with ❤️ in Bangladesh.
